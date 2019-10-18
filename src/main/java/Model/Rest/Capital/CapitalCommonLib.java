@@ -11,5 +11,8 @@ public class CapitalCommonLib {
 	public final static String REST_NAME_TRANSLATIONS="name;translations";
 	
 	public final static String REST_BERLIN_FIELDS_SIMPLE_1="regionalBlocs;languages;currencies";
+	
+	//SAMPLE URI REST CAPITAL
+	public final static String REST_CAPITAL_SAMPLE_URI_1 = "https://restcountries.eu/rest/v2/capital/berlin?fields=regionalBlocs;languages;currencies";
 
 }

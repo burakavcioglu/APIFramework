@@ -248,13 +248,14 @@ public abstract class APICore {
 	
 	//REST RESPONSE CONTROL
 	//-----------------------------------------------------------------------------------------------
-	public void restResponseControl(String endPoint, String searchValue) {
+	public void restResponseControl(String endPoint, String authorization, String searchValue) {
 		  try {
 
 			URL url = new URL(endPoint);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
+			conn.setRequestProperty("Authorization", authorization);
 
 			if (conn.getResponseCode() != 200) {
 				throw new RuntimeException("Failed REST: HTTP Error Code: "
@@ -281,8 +282,7 @@ public abstract class APICore {
 						System.out.println(""+APICore.GREEN+"["+searchValue+"] == is in the Response [Done]");
 					}
 					else {
-						System.out.println("["+searchValue+"]");
-						System.out.println(""+APICore.RED+"is NOT in the Response [FALSE]");
+						System.out.println(""+APICore.RED+"["+searchValue+"] == is in the Response [Failed]");
 					}
 				}
 			}
