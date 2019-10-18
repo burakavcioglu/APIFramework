@@ -244,5 +244,54 @@ public abstract class APICore {
 		    catch (IOException e) {e.printStackTrace();}
 	}
 	//-----------------------------------------------------------------------------------------------
+	
+	
+	//REST RESPONSE CONTROL
+	//-----------------------------------------------------------------------------------------------
+	public void restResponseControl(String endPoint, String searchValue) {
+		  try {
+
+			URL url = new URL(endPoint);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Accept", "application/json");
+
+			if (conn.getResponseCode() != 200) {
+				throw new RuntimeException("Failed REST: HTTP Error Code: "
+						+ conn.getResponseCode());
+			}
+
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+				(conn.getInputStream())));
+			
+			String restOutput;
+
+			if (searchValue == null) {
+				System.out.println("Rest API Response\n\n");
+				while ((restOutput = bufferedReader.readLine()) != null) {
+					System.out.println(""+APICore.BLUE+"Response Output"+"\n---------------\n"+ restOutput);
+				}
+			}
+			else {
+				
+				while ((restOutput = bufferedReader.readLine()) != null) {
+					Boolean found = restOutput.contains(searchValue);
+					
+					if(found) {
+						System.out.println(""+APICore.GREEN+"["+searchValue+"] == is in the Response [Done]");
+					}
+					else {
+						System.out.println("["+searchValue+"]");
+						System.out.println(""+APICore.RED+"is NOT in the Response [FALSE]");
+					}
+				}
+			}
+			
+			conn.disconnect();}
+		  
+		  	catch (MalformedURLException e) {e.printStackTrace();} 
+		    catch (IOException e) {e.printStackTrace();}
+	}
+	//-----------------------------------------------------------------------------------------------
 
 }
